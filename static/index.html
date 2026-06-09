@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>IPL Match Predictor – Random Forest</title>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-brand">
+    <span class="nav-icon">🏏</span>
+    <span class="nav-title">IPL<span class="accent"> Predictor</span></span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#predictor" class="active">Predict</a></li>
+    <li><a href="#stats">Stats</a></li>
+    <li><a href="#teams">Teams</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Random Forest ML Model</div>
+    <h1 class="hero-title">IPL Match <span class="accent">Winner Predictor</span></h1>
+    <p class="hero-sub">Powered by 1,099 IPL matches · 17 seasons · 71% accuracy</p>
+    <div class="hero-pills">
+      <span class="pill">🌲 200 Decision Trees</span>
+      <span class="pill">📊 14 Features</span>
+      <span class="pill">🏆 18 Teams</span>
+    </div>
+  </div>
+  <div class="hero-deco">
+    <div class="deco-circle c1"></div>
+    <div class="deco-circle c2"></div>
+    <div class="deco-circle c3"></div>
+  </div>
+</section>
+
+<!-- PREDICTOR SECTION -->
+<section id="predictor" class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>🔮 Predict Match Winner</h2>
+      <p>Fill in the match details and let the model decide</p>
+    </div>
+
+    <div class="predictor-grid">
+      <!-- FORM CARD -->
+      <div class="card form-card">
+
+        <!-- TEAMS ROW -->
+        <div class="form-teams-row">
+          <div class="form-group team-group">
+            <label>Team 1</label>
+            <select id="team1" onchange="syncToss()">
+              <option value="">Select Team</option>
+            </select>
+          </div>
+          <div class="vs-badge">VS</div>
+          <div class="form-group team-group">
+            <label>Team 2</label>
+            <select id="team2" onchange="syncToss()">
+              <option value="">Select Team</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- VENUE & TOSS -->
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Venue</label>
+            <select id="venue">
+              <option value="">Select Venue</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Toss Winner</label>
+            <select id="toss_winner">
+              <option value="">Select Team</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Toss Decision</label>
+            <div class="toggle-group">
+              <button class="toggle-btn active" id="btn-bat" onclick="setToss('bat')">🏏 Bat</button>
+              <button class="toggle-btn" id="btn-field" onclick="setToss('field')">🧤 Field</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Home Ground Belongs To</label>
+            <div class="toggle-group three">
+              <button class="toggle-btn active" id="btn-home-t1" onclick="setHome(1)">Team 1</button>
+              <button class="toggle-btn" id="btn-home-neutral" onclick="setHome(0)">Neutral</button>
+              <button class="toggle-btn" id="btn-home-t2" onclick="setHome(2)">Team 2</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- STATS INPUTS -->
+        <div class="stats-section">
+          <h4 class="stats-heading">Current Season Stats <span class="stats-hint">— enter manually</span></h4>
+          <div class="stats-guide">
+            <strong>📋 How to fill these:</strong>
+            <b>Avg Score</b> — team average runs per match this season (e.g. 175) &nbsp;|&nbsp;
+            <b>Win Rate</b> — enter as number: 64 means 64% &nbsp;|&nbsp;
+            <b>H2H Wins</b> — how many times this team beat the opponent in IPL history
+          </div>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label>Team 1 Avg Score</label>
+              <input type="number" id="team1_avg_score" min="0" max="300" value="165" placeholder="e.g. 175"/>
+            </div>
+            <div class="form-group">
+              <label>Team 2 Avg Score</label>
+              <input type="number" id="team2_avg_score" min="0" max="300" value="165" placeholder="e.g. 178"/>
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label>Team 1 Win Rate (0–100)</label>
+              <input type="number" id="team1_win_rate" min="0" max="100" value="50" placeholder="e.g. 64"/>
+            </div>
+            <div class="form-group">
+              <label>Team 2 Win Rate (0–100)</label>
+              <input type="number" id="team2_win_rate" min="0" max="100" value="50" placeholder="e.g. 58"/>
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label>H2H Wins (Team 1)</label>
+              <input type="number" id="h2h_team1" min="0" max="50" value="3" placeholder="e.g. 12"/>
+            </div>
+            <div class="form-group">
+              <label>H2H Wins (Team 2)</label>
+              <input type="number" id="h2h_team2" min="0" max="50" value="3" placeholder="e.g. 10"/>
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label>Team 1 Key Players Fit</label>
+              <div class="toggle-group">
+                <button class="toggle-btn active" id="t1fit-yes" onclick="setFit(1,1)">✅ Yes</button>
+                <button class="toggle-btn" id="t1fit-no" onclick="setFit(1,0)">❌ No</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Team 2 Key Players Fit</label>
+              <div class="toggle-group">
+                <button class="toggle-btn active" id="t2fit-yes" onclick="setFit(2,1)">✅ Yes</button>
+                <button class="toggle-btn" id="t2fit-no" onclick="setFit(2,0)">❌ No</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="predict-btn" onclick="predict()">
+          <span id="btn-text">🔮 Predict Winner</span>
+        </button>
+      </div>
+
+      <!-- RESULT CARD -->
+      <div class="card result-card" id="result-card">
+        <div class="result-placeholder" id="result-placeholder">
+          <div class="placeholder-icon">🏏</div>
+          <p>Fill in the match details and click <strong>Predict Winner</strong> to see the result</p>
+        </div>
+
+        <div class="result-content" id="result-content" style="display:none">
+          <div class="winner-crown">🏆</div>
+          <div class="winner-label">Predicted Winner</div>
+          <div class="winner-name" id="winner-name"></div>
+
+          <div class="confidence-section">
+            <div class="conf-team" id="conf-t1-name"></div>
+            <div class="conf-bar-wrap">
+              <div class="conf-bar t1-bar" id="conf-t1-bar"></div>
+              <div class="conf-bar t2-bar" id="conf-t2-bar"></div>
+            </div>
+            <div class="conf-team" id="conf-t2-name"></div>
+          </div>
+
+          <div class="conf-values">
+            <span id="conf-t1-val"></span>
+            <span class="conf-vs">vs</span>
+            <span id="conf-t2-val"></span>
+          </div>
+
+          <div class="result-details" id="result-details"></div>
+
+          <button class="reset-btn" onclick="resetResult()">🔄 Predict Again</button>
+        </div>
+
+        <div class="result-error" id="result-error" style="display:none">
+          <div class="error-icon">⚠️</div>
+          <p id="error-msg">Something went wrong</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS SECTION -->
+<section id="stats" class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <h2>📊 Dataset Insights</h2>
+      <p>Overview of the IPL data powering this model</p>
+    </div>
+    <div class="stats-grid" id="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">🏏</div>
+        <div class="stat-number" id="stat-matches">—</div>
+        <div class="stat-label">Total Matches</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🏆</div>
+        <div class="stat-number" id="stat-teams">—</div>
+        <div class="stat-label">Teams</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📍</div>
+        <div class="stat-number" id="stat-venues">—</div>
+        <div class="stat-label">Venues</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🎯</div>
+        <div class="stat-number" id="stat-accuracy">—</div>
+        <div class="stat-label">Model Accuracy</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📅</div>
+        <div class="stat-number">17</div>
+        <div class="stat-label">Seasons (2008–2024)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🌲</div>
+        <div class="stat-number">200</div>
+        <div class="stat-label">Decision Trees</div>
+      </div>
+    </div>
+
+    <!-- Feature Importance -->
+    <div class="card feature-card">
+      <h3>🌲 Feature Importance</h3>
+      <p class="sub-text">Which features matter most to the Random Forest model</p>
+      <div id="feature-bars"></div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAMS SECTION -->
+<section id="teams" class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>🏟️ Team Performance</h2>
+      <p>Historical IPL win records across all teams</p>
+    </div>
+    <div class="teams-grid" id="teams-grid"></div>
+  </div>
+</section>
+
+<!-- ABOUT SECTION -->
+<section id="about" class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <h2>ℹ️ About the Model</h2>
+    </div>
+    <div class="about-grid">
+      <div class="card about-card">
+        <div class="about-icon">🌲</div>
+        <h3>Random Forest</h3>
+        <p>An ensemble of 200 decision trees trained on 1,099 IPL matches. Each tree votes on the winner; the majority wins.</p>
+      </div>
+      <div class="card about-card">
+        <div class="about-icon">📦</div>
+        <h3>14 Features</h3>
+        <p>Team identity, venue, toss outcome, historical win rates, head-to-head record, average scores, and player fitness flags.</p>
+      </div>
+      <div class="card about-card">
+        <div class="about-icon">🎯</div>
+        <h3>71% Accuracy</h3>
+        <p>Evaluated on a held-out 20% test split (220 matches). Outperforms a naive baseline of ~55% from toss/win-rate alone.</p>
+      </div>
+      <div class="card about-card">
+        <div class="about-icon">🛠️</div>
+        <h3>Tech Stack</h3>
+        <p>Python · scikit-learn · Flask · HTML/CSS/JS. Fully local – no external AI API, pure ML inference.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <p>🏏 IPL Match Predictor · Random Forest Model · Built with Python &amp; scikit-learn</p>
+    <p class="footer-sub">Data: 2008–2024 IPL seasons · For educational purposes</p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

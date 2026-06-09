@@ -1,0 +1,193 @@
+{
+  "accuracy": 70.91,
+  "total_matches": 1099,
+  "teams": [
+    "Chennai Super Kings",
+    "Deccan Chargers",
+    "Delhi Capitals",
+    "Delhi Daredevils",
+    "Gujarat Lions",
+    "Gujarat Titans",
+    "Kings XI Punjab",
+    "Kochi Tuskers Kerala",
+    "Kolkata Knight Riders",
+    "Lucknow Super Giants",
+    "Mumbai Indians",
+    "Pune Warriors India",
+    "Punjab Kings",
+    "Rajasthan Royals",
+    "Rising Pune Supergiant",
+    "Rising Pune Supergiants",
+    "Royal Challengers Bangalore",
+    "Sunrisers Hyderabad"
+  ],
+  "venues": [
+    "Arun Jaitley Stadium, Delhi",
+    "BRSABV Ekana Cricket Stadium, Lucknow",
+    "Dubai International Cricket Stadium",
+    "Eden Gardens, Kolkata",
+    "IS Bindra Stadium, Mohali",
+    "Jawaharlal Nehru Stadium, Kochi",
+    "M Chinnaswamy Stadium, Bangalore",
+    "MA Chidambaram Stadium, Chennai",
+    "Maharashtra Cricket Association Stadium, Pune",
+    "Narendra Modi Stadium, Ahmedabad",
+    "Rajiv Gandhi Stadium, Hyderabad",
+    "Saurashtra Cricket Association Stadium, Rajkot",
+    "Sawai Mansingh Stadium, Jaipur",
+    "Sharjah Cricket Stadium",
+    "Sheikh Zayed Stadium, Abu Dhabi",
+    "Wankhede Stadium, Mumbai"
+  ],
+  "toss_decisions": [
+    "bat",
+    "field"
+  ],
+  "seasons": [
+    2008,
+    2009,
+    2010,
+    2011,
+    2012,
+    2013,
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "team_win_rates": {
+    "Chennai Super Kings": 76.5,
+    "Deccan Chargers": 16.0,
+    "Delhi Capitals": 31.6,
+    "Delhi Daredevils": 27.6,
+    "Gujarat Lions": 29.2,
+    "Gujarat Titans": 71.7,
+    "Kings XI Punjab": 32.1,
+    "Kochi Tuskers Kerala": 20.0,
+    "Kolkata Knight Riders": 61.5,
+    "Lucknow Super Giants": 66.7,
+    "Mumbai Indians": 92.2,
+    "Pune Warriors India": 29.2,
+    "Punjab Kings": 28.3,
+    "Rajasthan Royals": 34.3,
+    "Rising Pune Supergiant": 55.6,
+    "Rising Pune Supergiants": 28.6,
+    "Royal Challengers Bangalore": 50.4,
+    "Sunrisers Hyderabad": 27.2
+  },
+  "feature_importance": {
+    "team1_enc": 0.15944264856936502,
+    "team2_enc": 0.11096749704936255,
+    "venue_enc": 0.15002832438020686,
+    "toss_winner_enc": 0.09740482842015989,
+    "toss_decision_enc": 0.01165242433258375,
+    "team1_avg_score": 0.07293238804497208,
+    "team2_avg_score": 0.07155865338839426,
+    "team1_win_rate": 0.08665335660056914,
+    "team2_win_rate": 0.0968316683518522,
+    "h2h_team1_wins": 0.05382009371475293,
+    "h2h_team2_wins": 0.060926917994150225,
+    "team1_key_player_fit": 0.011636863405510775,
+    "team2_key_player_fit": 0.010781021497700162,
+    "home_advantage": 0.005363314250420249
+  },
+  "team_stats": {
+    "Chennai Super Kings": {
+      "avg_score": 171.1,
+      "wins": 186,
+      "matches": 243
+    },
+    "Deccan Chargers": {
+      "avg_score": 153.3,
+      "wins": 13,
+      "matches": 81
+    },
+    "Delhi Capitals": {
+      "avg_score": 165.1,
+      "wins": 24,
+      "matches": 76
+    },
+    "Delhi Daredevils": {
+      "avg_score": 161.3,
+      "wins": 43,
+      "matches": 156
+    },
+    "Gujarat Lions": {
+      "avg_score": 158.8,
+      "wins": 7,
+      "matches": 24
+    },
+    "Gujarat Titans": {
+      "avg_score": 163.8,
+      "wins": 33,
+      "matches": 46
+    },
+    "Kings XI Punjab": {
+      "avg_score": 162.9,
+      "wins": 62,
+      "matches": 193
+    },
+    "Kochi Tuskers Kerala": {
+      "avg_score": 147.7,
+      "wins": 3,
+      "matches": 15
+    },
+    "Kolkata Knight Riders": {
+      "avg_score": 165.7,
+      "wins": 163,
+      "matches": 265
+    },
+    "Lucknow Super Giants": {
+      "avg_score": 166.0,
+      "wins": 30,
+      "matches": 45
+    },
+    "Mumbai Indians": {
+      "avg_score": 178.3,
+      "wins": 237,
+      "matches": 257
+    },
+    "Pune Warriors India": {
+      "avg_score": 150.0,
+      "wins": 14,
+      "matches": 48
+    },
+    "Punjab Kings": {
+      "avg_score": 163.3,
+      "wins": 17,
+      "matches": 60
+    },
+    "Rajasthan Royals": {
+      "avg_score": 158.8,
+      "wins": 71,
+      "matches": 207
+    },
+    "Rising Pune Supergiant": {
+      "avg_score": 159.0,
+      "wins": 5,
+      "matches": 9
+    },
+    "Rising Pune Supergiants": {
+      "avg_score": 161.3,
+      "wins": 4,
+      "matches": 14
+    },
+    "Royal Challengers Bangalore": {
+      "avg_score": 171.8,
+      "wins": 135,
+      "matches": 268
+    },
+    "Sunrisers Hyderabad": {
+      "avg_score": 156.9,
+      "wins": 52,
+      "matches": 191
+    }
+  }
+}
